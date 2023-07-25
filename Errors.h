@@ -43,7 +43,7 @@ public:
     //ha megmarad a kör végén, módosítja a bar-okat
     void barmodify();
 
-    //amikor megsemmisül a kör végén, és az értékét hozzáadja a játékos pénztárcájához
+    //amikor megsemmisül a kör végén, az értékét hozzáadja a játékos pénztárcájához
     void eliminate();
 };
 std::ostream& operator<<(std::ostream& os, const Error& obj);
@@ -56,6 +56,8 @@ class szp : public Error{
 public:
     szp();
 };
+
+//A többi hiba
 
 class BrokenLighting : public Error {
 public:
@@ -124,40 +126,17 @@ public:
 
 ///Fontos! Error osztály hozzáadásakor ezt is bővíteni kell!
 
-///az összes hibatípust tároló vector. A hibák egyenletes randomizálásához kell. OGErrors nélkül semmit sem ér!
+///az összes nem-diák hibatípust tároló vector. A hibák egyenletes randomizálásához kell. AddErrors nélkül semmit sem ér!
 extern std::vector<std::unique_ptr<Error>> Errors;
 
-///A mainben hozzáadja az összes hibatípust az Errors vectorhoz.
-void OGErrors() {
-    // Mindegyiket manuálisan hozzáadjuk...
-    Errors.push_back(std::make_unique<BrokenLighting>());
+///az összes diák eredetű hibatípust tároló vector. Szintén a hibák egyenletes randomizáláshoz kell. StudErrors nélkül semmit sem ér!
+extern std::vector<std::unique_ptr<Error>> StudErrors;
 
-    Errors.push_back(std::make_unique<MalfunctioningOven>());
+///A mainben hozzáadja az összes nem-diák hibatípust az Errors vectorhoz.
+void AddErrors();
 
-    Errors.push_back(std::make_unique<FaultyWashingMachine>());
-
-    Errors.push_back(std::make_unique<Leakage>());
-
-    Errors.push_back(std::make_unique<MalfunctioningDisabledGate>());
-
-    Errors.push_back(std::make_unique<NoisyRoom>());
-
-    Errors.push_back(std::make_unique<NoisyParty>());
-
-    Errors.push_back(std::make_unique<FalseFireAlarm>());
-
-    Errors.push_back(std::make_unique<MixedUpEntryCards>());
-
-    Errors.push_back(std::make_unique<MoldyFridge>());
-
-    Errors.push_back(std::make_unique<BrokenLibraryComputers>());
-
-    Errors.push_back(std::make_unique<PosterDoorInRoom208>());
-
-    Errors.push_back(std::make_unique<ElevatorNotWorking>());
-}
-//OGErrors vége
-
+///hozzáadja a mainben a diák eredetű hibapéldányokat.
+void AddStudErrors();
 
 
 

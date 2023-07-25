@@ -147,4 +147,37 @@ ElevatorNotWorking::ElevatorNotWorking() {
     value = 20;
 }
 
+///A mainben hozzáadja az összes nem-diák hibatípust az Errors vectorhoz.
+void AddErrors() {
+    // Mindegyiket manuálisan hozzáadjuk...
+    Errors.push_back(std::make_unique<BrokenLighting>());
+
+    Errors.push_back(std::make_unique<MalfunctioningOven>());
+
+    Errors.push_back(std::make_unique<FaultyWashingMachine>());
+
+    Errors.push_back(std::make_unique<Leakage>());
+
+    Errors.push_back(std::make_unique<MalfunctioningDisabledGate>());
+
+    Errors.push_back(std::make_unique<MixedUpEntryCards>());
+
+    Errors.push_back(std::make_unique<BrokenLibraryComputers>());
+
+    Errors.push_back(std::make_unique<ElevatorNotWorking>());
+}
+
+///hozzáadja a mainben a diák eredetű hibapéldányokat.
+void AddStudErrors(){
+    StudErrors.push_back(std::make_unique<NoisyRoom>());
+
+    StudErrors.push_back(std::make_unique<NoisyParty>());
+
+    StudErrors.push_back(std::make_unique<FalseFireAlarm>());
+
+    StudErrors.push_back(std::make_unique<PosterDoorInRoom208>());
+
+    StudErrors.push_back(std::make_unique<MoldyFridge>());
+}
+
 
