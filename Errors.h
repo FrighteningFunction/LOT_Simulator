@@ -18,6 +18,8 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <map>
+#include <functional>
 
 typedef std::string string; //!!
 
@@ -126,17 +128,11 @@ public:
 
 ///Fontos! Error osztály hozzáadásakor ezt is bővíteni kell!
 
-///az összes nem-diák hibatípust tároló vector. A hibák egyenletes randomizálásához kell. AddErrors nélkül semmit sem ér!
-extern std::vector<std::unique_ptr<Error>> Errors;
+///az összes nem-diák hibatípust tároló map. A hibák egyenletes randomizálásához kell.
+extern std::map<string, std::function<std::unique_ptr<Error>()>> Errors;
 
-///az összes diák eredetű hibatípust tároló vector. Szintén a hibák egyenletes randomizáláshoz kell. StudErrors nélkül semmit sem ér!
-extern std::vector<std::unique_ptr<Error>> StudErrors;
-
-///A mainben hozzáadja az összes nem-diák hibatípust az Errors vectorhoz.
-void AddErrors();
-
-///hozzáadja a mainben a diák eredetű hibapéldányokat.
-void AddStudErrors();
+///az összes diák eredetű hibatípust tároló map. Szintén a hibák egyenletes randomizáláshoz kell.
+extern std::map<string, std::function<std::unique_ptr<Error>()>> StudErrors;
 
 
 

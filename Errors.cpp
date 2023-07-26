@@ -117,7 +117,7 @@ MixedUpEntryCards::MixedUpEntryCards() {
 
 // Penészes hűtő!
 MoldyFridge::MoldyFridge() {
-    name = "Moldy Fridge!!!!!";
+    name = "Moldy Fridge";
     corporate = -1;
     student = -2;
     value = 10;
@@ -147,37 +147,38 @@ ElevatorNotWorking::ElevatorNotWorking() {
     value = 20;
 }
 
-///A mainben hozzáadja az összes nem-diák hibatípust az Errors vectorhoz.
-void AddErrors() {
-    // Mindegyiket manuálisan hozzáadjuk...
-    Errors.push_back(std::make_unique<BrokenLighting>());
+///az összes nem-diák hibatípust tároló map. A hibák egyenletes randomizálásához kell.
+std::map<string, std::function<std::unique_ptr<Error>()>> Errors=
+        {
+                {"Broken Lighting", [](){ return std::make_unique<BrokenLighting>(); }},
 
-    Errors.push_back(std::make_unique<MalfunctioningOven>());
+                {"Malfunctioning Oven", [](){ return std::make_unique<MalfunctioningOven>(); }},
 
-    Errors.push_back(std::make_unique<FaultyWashingMachine>());
+                {"Faulty Washing Machine", [](){ return std::make_unique<FaultyWashingMachine>(); }},
 
-    Errors.push_back(std::make_unique<Leakage>());
+                {"Leakage", [](){ return std::make_unique<Leakage>(); }},
 
-    Errors.push_back(std::make_unique<MalfunctioningDisabledGate>());
+                {"Malfunctioning Disabled Gate", [](){ return std::make_unique<MalfunctioningDisabledGate>(); }},
 
-    Errors.push_back(std::make_unique<MixedUpEntryCards>());
+                {"Mixed-Up EntryCards", [](){ return std::make_unique<MixedUpEntryCards>(); }},
 
-    Errors.push_back(std::make_unique<BrokenLibraryComputers>());
+                {"Broken Library Computers", [](){ return std::make_unique<BrokenLibraryComputers>(); }},
 
-    Errors.push_back(std::make_unique<ElevatorNotWorking>());
-}
+                {"Poster Door In Room208", [](){ return std::make_unique<PosterDoorInRoom208>(); }},
 
-///hozzáadja a mainben a diák eredetű hibapéldányokat.
-void AddStudErrors(){
-    StudErrors.push_back(std::make_unique<NoisyRoom>());
+                {"Elevator Not Working", [](){ return std::make_unique<ElevatorNotWorking>(); }}
+        };
 
-    StudErrors.push_back(std::make_unique<NoisyParty>());
+///az összes diák eredetű hibatípust tároló map. Szintén a hibák egyenletes randomizáláshoz kell.
+std::map<string, std::function<std::unique_ptr<Error>()>> StudErrors=
+        {
+                {"Noisy Room", [](){ return std::make_unique<NoisyRoom>(); }},
 
-    StudErrors.push_back(std::make_unique<FalseFireAlarm>());
+                {"Noisy Party", [](){ return std::make_unique<NoisyParty>(); }},
 
-    StudErrors.push_back(std::make_unique<PosterDoorInRoom208>());
+                {"False Fire Alarm", [](){ return std::make_unique<FalseFireAlarm>(); }},
 
-    StudErrors.push_back(std::make_unique<MoldyFridge>());
-}
+                {"Moldy Fridge", [](){ return std::make_unique<MoldyFridge>(); }},
+        };
 
 

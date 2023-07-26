@@ -5,21 +5,29 @@
 #include <memory>
 #include <random>
 
-Error* LOT::ChooseError(const std::vector<std::unique_ptr<Error>>& errors) const {
+std::unique_ptr<Error> LOT::ChooseError(const std::map<string, std::function<std::unique_ptr<Error>()>>& map) const {
     // Ha üres
-    if(errors.empty()) {
+    if(map.empty()) {
         return nullptr;
     }
 
     // Random index generálás
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::uniform_int_distribution<int> dist(0, errors.size() - 1);
+    std::uniform_int_distribution<int> dist(0, map.size() - 1);
 
     int randomIndex = dist(mt);
 
-    //A  kiválasztott Error pointerének visszaadása
-    return errors[randomIndex].get();
+    // Iterátor, ami a map elejére mutat
+    auto iter = map.begin();
+
+// Mozgassuk az iterátort a random szám szerint
+    std::advance(iter, randomIndex);
+
+// Most az iter egy random bejegyzésre mutat a mapben
+    auto& randomEntry = *iter;
+
+    return (iter->second)();
 }
 
 int LOT::randomszint(){
@@ -41,7 +49,7 @@ void LOT::spawnerrors() {
 
     double RAND = dist(mt);
 
-    double score= RAND-(Corporatebar+Studentbar)/4;
+    double score= RAND-(Corporatebar+Studentbar)/4.0;
 
     if (score<0) score=0; //0-nál kisebb score nem értelmezett
 
@@ -54,14 +62,6 @@ void LOT::spawnerrors() {
     else if(score>10) num+=1;
     //egyébként marad az alapérték
 
-    //Random szintet kiválasztva, az Errors globális smart pointereket tároló listából random
-    //hibát kiválasztva hozzáadogatunk num db hibát a LOT-hoz
-    //vigyázat! A hibák példányait nem szabad törölni, csak a pointereket. A pointerek száma határozza meg,
-    //mennyi in-game hiba van a LOT-ban (pl. ha 4db NoisyRoom van, az 4db pointert jelent UGYANARRA a NoisyRoom
-    //hibapéldányra, a törlésnek az illúzióját a LOT vectoraiban levő pointereinek törlése jelenti, valamint
-    //az eliminate() Error funkció.
-    //
-    // VALÓJÁBAN NEM SZABADÍTUNK FEL VAGY FOGLALUNK MEMÓRIÁT SOHA.
     for (int i=0; i!=num; i++){
         Szintek[randomszint()].push_back(ChooseError(Errors));
     }
