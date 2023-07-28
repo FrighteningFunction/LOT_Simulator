@@ -1,2 +1,3 @@
-# Project exclude paths
-/cmake-build-debug/
+#.gitignore
+googletest
+cmake-build-debug
