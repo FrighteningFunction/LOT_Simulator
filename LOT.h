@@ -1,3 +1,8 @@
+/**
+ * @file LOT.h
+ * @brief A LOT class deklarációját tartalmazó fájl
+ */
+
 #ifndef LOT_LOT_H
 #define LOT_LOT_H
 
@@ -11,10 +16,24 @@
 ///visszaadja, hány számjegyű egy szám
 int countdigit(int no);
 
+/**
+ * @class LOT
+ * @brief A LOT-ot megtestesítő virtuális @singleton osztály, mely a hibákat tárolja
+ *
+ * @details
+ * Az egyik vector a hibákat tároló konténereket jelenti,
+ * A másik vector pedig a LOT-beli SZINTEKRE ad smart pointereket
+ * Ezt nehéz lehet megszokni, de van egy jó oka: A Szakkollégiumi programokat külön kezeljük a többi hibától,
+ * ugyanis elvégre csak a megvalósításban számítanak hibának.
+ *
+ * @todo Ötlet: Ha a jövőben elkülönítünk többféle hibakategóriákat, érdemes lehet kicsit változtatni a struktúrán,
+ * pontosabban minden hibakategóriának külön vectorokat létrehozni, amiket végigpásztázhatunk. Ennek fényjelzésére
+ * tettem és kezeltem külön a szakkollégiumi programokat a kódban (nem tettem a szintek közé, minek), még akkor is,
+ * ha így bonyolultabb. Mégis átláthatóbb.
+ */
 class LOT {
 private:
     ///@brief heterogén kollekciók, melyek a szintenkénti hibákat tárolják
-
     std::vector<std::unique_ptr<Error>> Foldszint,
     Elso,
     Masodik,
@@ -22,11 +41,13 @@ private:
     Negyedik,
     Szakkollegiumi;
 
-    //A fenti szinteket egybegyűjtő konténer. Dereferálni kell, kicsit kellemetlen, de ez a legegyszerűbb megoldás
+    ///A fenti szinteket egybegyűjtő konténer. Dereferálni kell, kicsit kellemetlen, de ez a legegyszerűbb megoldás
     std::vector<std::vector<std::unique_ptr<Error>>*> Szintek = {&Foldszint, &Elso, &Masodik, &Harmadik, &Negyedik};
+    //Szakkollégiumi progamok külön kezelve!
 
     LOT()=default;
 
+    ///A LOT singleton példánya
     static LOT peldany;
 public:
 
@@ -60,7 +81,7 @@ public:
     void spawnerrors();
 
     ///szintenként kiprinteli az összes hibát az azonosítójukkal (számukkal) együtt.
-    void print();
+    void print() const;
 
     ///kiprinteli az összes error printable-jét.
     void ErrorShout();
@@ -77,7 +98,7 @@ public:
 
     ///igen, ha van szakkollegiumi program
     ///nem, ha nincs
-    bool van_eSzakkollegiumi();
+    bool van_eSzakkollegiumi() const;
 
     ///egy referenciát ad vissza a szakkollégiumi programokat tároló vectorra
     std::vector<std::unique_ptr<Error>>& getSzakkollegiumi();

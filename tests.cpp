@@ -1,4 +1,12 @@
-#include "tests.h"
+/**
+ * @file tests.cpp
+ * @brief A játék bizonyos funcionalitásait gtesztelő fájl
+ * @todo sajnos felületes, de a legfontosabb funkciókat teszteli.
+ *
+ * ha módosítások után ez nem fut le (gyökeres változtatások kivételével)
+ * Azonnal át kell nézni a hiba okát!
+*/
+
 #include "control.h"
 #include "Errors.h"
 #include "LOT.h"

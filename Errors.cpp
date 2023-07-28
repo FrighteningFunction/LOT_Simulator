@@ -1,3 +1,8 @@
+/**
+ * @file Errors.cpp
+ * @brief A játékban előforduló hiba osztályok részletes megvalósításai.
+ */
+
 #include "Errors.h"
 
 #include <vector>
@@ -104,9 +109,9 @@ Leakage::Leakage() {
 }
 
 // Malfunctioning Disabled Gate
-EldugultVC::EldugultVC() {
-    name = "Eldugult VC az egyik szobaban";
-    printable="Valaki sved husgolyot huzott le az egyik VC-ben!";
+EldugultWC::EldugultWC() {
+    name = "Eldugult WC az egyik szobaban";
+    printable="Valaki sved husgolyot huzott le az egyik WC-ben!";
     corporate = -5;
     student = -10;
     value = 30;
@@ -184,20 +189,30 @@ KupiaKonyhaban::KupiaKonyhaban() {
     value = 20;
 }
 
+/**
+ * @details
+ * @todo Igazából ezek szimpla lambda funkciókat tároló vectorok is lehetnének,
+ * Azért hagytam mégis így meg, hogy ID-k alapján is kereshetők legyenek a funkciók.
+ * Pillanatnyilag csak "felcsapunk" egy map entryt, és csak a spawnoló Error kell nekünk,
+ * teljesen érdektelen, milyen az az Error,
+ * hiszen a hiba kategóriáját úgyis a map maga határozza meg (diák és nem-diák eredetű hibák
+ * külön vannak tárolva)
+ */
+
 ///az összes nem-diák hibatípust tároló map. A hibák egyenletes randomizálásához kell.
-std::map<string, std::function<std::unique_ptr<Error>()>> Errors{
+const std::map<string, std::function<std::unique_ptr<Error>()>> Errors{
         {"BrokenLighting", [](){ return std::make_unique<BrokenLighting>(); }},
         {"MalfunctioningOven", [](){ return std::make_unique<MalfunctioningOven>(); }},
         {"MoldyWashingMachine", [](){ return std::make_unique<MoldyWashingMachine>(); }},
         {"Leakage", [](){ return std::make_unique<Leakage>(); }},
-        {"MalfunctioningDisabledGate", [](){ return std::make_unique<EldugultVC>(); }},
+        {"MalfunctioningDisabledGate", [](){ return std::make_unique<EldugultWC>(); }},
         {"MixedUpEntryCards", [](){ return std::make_unique<MixedUpEntryCards>(); }},
         {"BrokenLibraryComputers", [](){ return std::make_unique<Rosszulfelmosott>(); }},
         {"ElevatorNotWorking", [](){ return std::make_unique<KupiaKonyhaban>(); }}
 };
 
 ///Az összes diák eredetű hibatípust tároló map. A hibák egyenletes randomizáláshoz kell.
-std::map<string, std::function<std::unique_ptr<Error>()>> StudErrors{
+const std::map<string, std::function<std::unique_ptr<Error>()>> StudErrors{
         {"NoisyRoom", [](){ return std::make_unique<NoisyRoom>(); }},
         {"NoisyParty", [](){ return std::make_unique<NoisyParty>(); }},
         {"FalseFireAlarm", [](){ return std::make_unique<FalseFireAlarm>(); }},

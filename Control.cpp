@@ -1,3 +1,8 @@
+/**
+ * @file Control.cpp
+ * @brief A fő, játékot irányító ciklust kiszolgáló funckiók.
+ */
+
 #include "Control.h"
 #include "LOT.h"
 
@@ -15,7 +20,7 @@ const string JATEKCIM="LOT Simulator";
 ///Eleterőt,
 ///Hányadik nap van,
 ///Valamint a LOT összes hibáját
-void InterfaceUpdate(LOT& dorm){
+void InterfaceUpdate(const LOT& dorm){
     //kiprintelünk egy elválasztót, különben kesze-kusza lenne a játék
     std::cout<<"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
                "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
@@ -27,7 +32,7 @@ void InterfaceUpdate(LOT& dorm){
 
 /**
  * Bekéri a felhasználótól, melyik hibát szeretné kijavítani,
- * illatve mit szeretne csinálni.
+ * illetve mit szeretne csinálni.
  * ellenőrzi az input helyességét.
  * @param dorm a LOT példányának referenciája
  * @return egy helyes int
@@ -54,6 +59,8 @@ int valaszbeker(LOT& dorm){
         else errorIndex=userChoice%((digits-1)*10);
 
         //jó-e a szintszám?
+        ///Itt jön képbe, hogy külön kezeljük a Szakkollégiumi programokat sajnos,
+        ///kicsit kellemetlen
         if(dorm.van_eSzakkollegiumi()) {
             //ha van, akkor szintek+1 floor index is értelmezett
             if (floor < 0 || floor > dorm.Floors+1) {
@@ -65,25 +72,29 @@ int valaszbeker(LOT& dorm){
                 throw std::out_of_range("A szintszam hatarokon kívul van");
             }
         }
+
         //jó-e az Errorindex?
         if(floor<=dorm.Floors) {
             //ha a szintekre hivatkozott a játékos
             if (errorIndex < 0 || errorIndex >= dorm.getSzintek()[floor]->size()) {
-                throw std::out_of_range("A hiba indexe hataron kívul esik");
+                throw std::out_of_range("A hiba indexe hataron kivul esik");
             }
         }else{
             //ha a szakkollégiumi programokra hivatkozott a játékos
             if (errorIndex < 0 || errorIndex >= dorm.getSzakkollegiumi().size()) {
-                throw std::out_of_range("A hiba indexe hataron kívul esik");
+                throw std::out_of_range("A hiba indexe hataron kivul esik");
             }
         }
 
         return userChoice;
     }
+
+    //Itt kapjuk el, ha nem számot írt be
     catch (std::invalid_argument& e) {
         std::cerr << "Kerlek, szamot irj be!\n";
         return valaszbeker(dorm);  // Ask for input again
     }
+    //Itt kapjuk el a szintszám- és Errorindex bajokat
     catch (std::out_of_range& e) {
         std::cerr <<e.what()<< "\n";
         return valaszbeker(dorm);  // Ask for input again

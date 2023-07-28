@@ -1,3 +1,8 @@
+/**
+ * @file Control.h
+ * @brief A fő, játékot irányító ciklust kiszolgáló funckiók.
+ */
+
 #ifndef LOT_CONTROL_H
 #define LOT_CONTROL_H
 
@@ -16,7 +21,7 @@ void clearConsole();
 
 void openingScreen(const std::string& title);
 
-void InterfaceUpdate(LOT& dorm);
+void InterfaceUpdate(const LOT& dorm);
 
 int valaszbeker(LOT& dorm);
 

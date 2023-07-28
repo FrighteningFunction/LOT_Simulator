@@ -1,3 +1,8 @@
+/**
+ * @file LOT.cpp
+ * @brief A LOT-ot megvalósító funckiók részletes kifejtése.
+ */
+
 #include "LOT.h"
 
 #include <map>
@@ -8,7 +13,7 @@
 ///visszaadja, hány számjegyű egy szám
 int countdigit(int no){
     if (no == 0) {
-        return 1; // Special case for zero, which has one digit
+        return 1; // Speckó eset a 0-ra, aminek egy számjegye van
     }
 
     int count = 0;
@@ -159,7 +164,7 @@ void LOT::spawnerrors(){
 //spawnerrors vége
 
 ///szintenként kiprinteli az összes hibát az azonosítójukkal (számukkal) együtt.
-void LOT::print(){
+void LOT::print() const{
     int i;
     //végighalad az összes szinten
     for (i=0; i!=Szintek.size(); ++i){
@@ -249,7 +254,7 @@ void LOT::Reset() {
 
 ///igen, ha van szakkollegiumi program
 ///nem, ha nincs
-bool LOT::van_eSzakkollegiumi(){
+bool LOT::van_eSzakkollegiumi() const{
     return !Szakkollegiumi.empty();
 }
 
