@@ -47,7 +47,7 @@ public:
     ///Visszaad egy referenciát a szintekre mutató smart pointereket tároló Szintek vectorra
     std::vector<std::vector<std::unique_ptr<Error>>*>& getSzintek();
 
-    ///Az Errors vagy a StudErrors globális konténerből kiválaszt egy ranodm hibatípust,
+    ///Az Errors vagy a StudErrors globális konténerből kiválaszt egy random hibatípust,
     ///majd abból a hibatípusból visszad egy új olyan típusú hibapéldányra mutató unique_ptr-t.
     ///@param map Errors vagy StudErrors map (extern)
     std::unique_ptr<Error> ChooseError(const std::map<string, std::function<std::unique_ptr<Error>()>>& map);

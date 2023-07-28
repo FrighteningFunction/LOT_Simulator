@@ -3,7 +3,8 @@
 ## Mi ez?
 
 A LOT SIMULATOR egy egyszerű, konzolos játék (parancssorban, terminálban futtatható).
-A játék a koleszunkból indul ki, annak problémáit szimulálja poénból.
+A játék a koleszunkból indul ki, annak előforduló problémáit szimulálja poénból.
+(100% poénból, nyilván nem hivatott senkit, semmit megsérteni.)
 
 ### A játék célja
 
